@@ -43,7 +43,7 @@ Each folder represents a standalone module.
 | PM_03 | Data structures, command-line arguments, comprehensions                     |
 | PM_04 | File handling, streams                      |
 | PM_05 | Polymorphism, abstract base classes, duck typing                        |
-| PM_06 | Import strategies streams                      |
+| PM_06 | Import strategies                     |
 | ...       | ...                                                             |
 
 > ℹ️ For detailed explanations, refer to each module's README.
