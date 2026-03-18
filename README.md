@@ -5,7 +5,6 @@ _This project has been created as part of the 42 curriculum by qgairaud._
 This repository contains a collection of Python modules developed as part of the 42 new curriculum.
 Each module focuses on a specific concept, algorithm, or programming paradigm, and is designed to be **self-contained** while contributing to a broader learning path.
 
----
 
 ## 📚 Overview
 
@@ -19,7 +18,6 @@ Each module:
 
 Together, they form a progressive learning journey through Python development.
 
----
 
 ## 🗂️ Repository Structure
 
@@ -34,7 +32,6 @@ Together, they form a progressive learning journey through Python development.
 
 Each folder represents a standalone module.
 
----
 
 ## 📦 Modules
 
@@ -46,12 +43,11 @@ Each folder represents a standalone module.
 | PM_03 | Data structures, command-line arguments, comprehensions                     |
 | PM_04 | File handling, streams                      |
 | PM_05 | Polymorphism, abstract base classes, duck typing                        |
-| PM_06 | Import strategies                           |
+| PM_06 | Import strategies streams                      |
 | ...       | ...                                                             |
 
 > ℹ️ For detailed explanations, refer to each module's README.
 
----
 
 ## 🧠 Skills & Concepts Covered
 
@@ -62,7 +58,6 @@ Each folder represents a standalone module.
 * Code organization and modular design
 * Error handling and testing
 
----
 
 ## ⚙️ Installation
 
@@ -75,7 +70,6 @@ cd PYTHON_MODULES_42
 
 No global installation is required. Each module can be run independently.
 
----
 
 ## ▶️ Usage
 
@@ -88,7 +82,6 @@ python3 main.py
 
 Refer to the module's README for specific instructions and requirements.
 
----
 
 ## 📌 Notes
 
