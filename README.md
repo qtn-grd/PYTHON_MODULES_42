@@ -39,7 +39,7 @@ Each folder represents a standalone module.
 | --------- | --------------------------------------------------------------- |
 | PM_00 | Introduction to Python basics (syntax, variables, control flow) |
 | PM_01 | Classes, encapsulation, inheritance                            |
-| PM_02 | Errors handlin, custom exceptions                           |
+| PM_02 | Errors handling, custom exceptions                           |
 | PM_03 | Data structures, command-line arguments, comprehensions                     |
 | PM_04 | File handling, streams                      |
 | PM_05 | Polymorphism, abstract base classes, duck typing                        |
