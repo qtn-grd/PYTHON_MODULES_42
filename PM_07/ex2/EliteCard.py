@@ -37,6 +37,7 @@ class EliteCard(Card, Combatable, Magical):
         Raises:
             CardError: If any attribute has an invalid value.
         """
+
         super().__init__(name, cost, rarity)
 
         if not isinstance(attack, int) or attack <= 0:
@@ -62,9 +63,10 @@ class EliteCard(Card, Combatable, Magical):
         Returns:
             Dict[str, Any]: Result of the play action.
         """
+
         return {
-            "card_played": self.name,
-            "mana_used": self.cost,
+            "card_played": self._name,
+            "mana_used": self._cost,
             "effect": "Elite card summoned to battlefield"
         }
 
@@ -78,9 +80,11 @@ class EliteCard(Card, Combatable, Magical):
         Returns:
             Dict[str, Any]: Result of the attack action.
         """
-        target_name = getattr(target, "name", "unknown")
+
+        target_name = getattr(target, "_name", "unknown")
+
         return {
-            "attacker": self.name,
+            "attacker": self._name,
             "target": target_name,
             "damage": self._attack,
             "combat_type": "melee"
@@ -102,7 +106,7 @@ class EliteCard(Card, Combatable, Magical):
         still_alive: bool = self.health > 0
 
         return {
-            "defender": self.name,
+            "defender": self._name,
             "damage_taken": damage_taken,
             "damage_blocked": blocked,
             "still_alive": still_alive
@@ -138,13 +142,14 @@ class EliteCard(Card, Combatable, Magical):
         Returns:
             Dict[str, Any]: Result of the spell cast.
         """
+
         mana_cost: int = len(targets) * 2
         if self.mana < mana_cost:
             raise CardError("Not enough mana to cast spell")
         self.mana -= mana_cost
 
         return {
-            "caster": self.name,
+            "caster": self._name,
             "spell": spell_name,
             "targets": [getattr(t, "name", t) for t in targets],
             "mana_used": mana_cost
@@ -163,6 +168,7 @@ class EliteCard(Card, Combatable, Magical):
         Returns:
             Dict[str, Union[int, str]]: Updated mana information.
         """
+
         if amount < 0:
             raise CardError("Mana amount must be positive")
 
@@ -180,6 +186,7 @@ class EliteCard(Card, Combatable, Magical):
         Returns:
             Dict[str, int]: Current mana value.
         """
+
         return {
             "mana": self.mana
         }

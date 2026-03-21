@@ -29,11 +29,15 @@ class ArtifactCard(Card):
         Raises:
             ValueError: If durability is not a positive integer.
         """
+
         super().__init__(name, cost, rarity)
+
         if not isinstance(durability, int) or durability <= 0:
             raise CardError("Durability must be a positive integer")
-        self.durability = durability
-        self.effect = effect
+
+        self._durability = durability
+
+        self._effect = effect
 
     def play(self, game_state: dict) -> dict:
         """
@@ -45,22 +49,24 @@ class ArtifactCard(Card):
         Returns:
             dict: Description of the card played and its effect.
         """
+
         return {
-            "card_played": self.name,
-            "mana_used": self.cost,
-            "effect": f"Permanent: {self.effect}"
+            "card_played": self._name,
+            "mana_used": self._cost,
+            "effect": f"Permanent: {self._effect}"
         }
 
     def activate_ability(self) -> dict:
         """
-        Activates the artifact's permanent ability.
+        Activates the artifact's durable ability.
 
         Returns:
             dict: Description of the artifact effect
             and its remaining durability.
         """
+
         return {
-            "artifact": self.name,
-            "effect_active": self.effect,
-            "durability_remaining": self.durability
+            "artifact": self._name,
+            "effect_active": self._effect,
+            "durability_remaining": self._durability
         }

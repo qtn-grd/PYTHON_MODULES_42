@@ -32,13 +32,18 @@ def main() -> None:
     print(fire_dragon.get_card_info())
     print()
 
-    available_mana: int = 6
+    available_mana = 6
 
-    print(f"Playing {fire_dragon.name} with {available_mana} mana available:")
-    print(f"Playable: {fire_dragon.is_playable(available_mana)}")
+    print(f"Playing {fire_dragon._name} with {available_mana} mana available:")
 
-    if fire_dragon.is_playable(available_mana):
-        print(f"Play result: {fire_dragon.play({})}")
+    try:
+        print(f"Playable: {fire_dragon.is_playable(available_mana)}")
+
+        if fire_dragon.is_playable(available_mana):
+            print(f"Play result: {fire_dragon.play({})}")
+
+    except (TypeError) as error:
+        print(f"Error trying to play card: {error}", file=sys.stderr)
 
     print()
 
@@ -50,16 +55,22 @@ def main() -> None:
         print(f"Error creating creature card: {error}", file=sys.stderr)
         return
 
-    print(f"{fire_dragon.name} attacks {goblin_warrior.name}:")
+    print(f"{fire_dragon._name} attacks {goblin_warrior._name}:")
     print(f"Attack result: {fire_dragon.attack_target(goblin_warrior)}")
     print()
 
     available_mana = 3
 
     print(f"Testing insufficient mana ({available_mana} available):")
-    print(f"Playable: {fire_dragon.is_playable(available_mana)}")
-    if fire_dragon.is_playable(available_mana):
-        print(f"Play result: {fire_dragon.play({})}")
+
+    try:
+        print(f"Playable: {fire_dragon.is_playable(available_mana)}")
+
+        if fire_dragon.is_playable(available_mana):
+            print(f"Play result: {fire_dragon.play({})}")
+
+    except (TypeError) as error:
+        print(f"Error trying to play card: {error}", file=sys.stderr)
 
     print()
 

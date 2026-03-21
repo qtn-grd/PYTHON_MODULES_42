@@ -1,6 +1,6 @@
 from ex0.Card import Card, CardError
 from ex0.CreatureCard import CreatureCard
-from ex1.SpellCard import SpellCard
+from ex1.SpellCard import SpellCard, SpellCardError
 from ex1.ArtifactCard import ArtifactCard
 from ex1.Deck import Deck, DeckError
 import sys
@@ -14,6 +14,7 @@ def main() -> None:
     displays deck statistics, shuffles the deck, draws and plays each card,
     illustrating polymorphism in action.
     """
+
     print()
     print("=== DataDeck Deck Builder ===")
     print()
@@ -23,9 +24,9 @@ def main() -> None:
 
     deck: Deck = Deck()
 
-    fire_dragon: CreatureCard | None = None
-    lightning_bolt: SpellCard | None = None
-    mana_crystal: ArtifactCard | None = None
+    fire_dragon = None
+    lightning_bolt = None
+    mana_crystal = None
 
     try:
         fire_dragon = CreatureCard(
@@ -35,8 +36,8 @@ def main() -> None:
 
     try:
         lightning_bolt = SpellCard(
-            "Lightning Bolt", 3, "Rare", "damage")
-    except (CardError, TypeError) as error:
+            "Lightning Bolt", 3, "Rare", "Deal 3 damage to target")
+    except (SpellCardError, TypeError) as error:
         print(f"Error creating spell card: {error}", file=sys.stderr)
 
     try:
@@ -64,10 +65,11 @@ def main() -> None:
     deck.shuffle()
 
     num_cards: int = len(deck.cards)
+
     for _ in range(num_cards):
         try:
             card: Card = deck.draw_card()
-            print(f"Drew: {card.name} ({type(card).__name__})")
+            print(f"Drew: {card._name} ({type(card).__name__})")
             print("Play result:", card.play({}))
             print()
         except DeckError as error:

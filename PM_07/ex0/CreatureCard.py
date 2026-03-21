@@ -35,8 +35,8 @@ class CreatureCard(Card):
         if not isinstance(health, int) or health <= 0:
             raise CardError("Health must be a positive integer")
 
-        self.attack: int = attack
-        self.health: int = health
+        self._attack: int = attack
+        self._health: int = health
 
     def get_card_info(self) -> dict[str, Union[str, int]]:
         """
@@ -44,13 +44,13 @@ class CreatureCard(Card):
         including type, attack, and health.
 
         Returns:
-            dict[str, str | int]: Dictionary containing card info.
+            dict[str, Union[str, int]: Dictionary containing card info.
         """
 
         info = super().get_card_info()
         info["type"] = "Creature"
-        info["attack"] = self.attack
-        info["health"] = self.health
+        info["attack"] = self._attack
+        info["health"] = self._health
 
         return info
 
@@ -67,8 +67,8 @@ class CreatureCard(Card):
         """
 
         return {
-            "card_played": self.name,
-            "mana_used": self.cost,
+            "card_played": self._name,
+            "mana_used": self._cost,
             "effect": "Creature summoned to battlefield"
         }
 
@@ -84,8 +84,8 @@ class CreatureCard(Card):
         """
 
         return {
-            "attacker": self.name,
-            "target": target.name,
-            "damage_dealt": self.attack,
+            "attacker": self._name,
+            "target": target._name,
+            "damage_dealt": self._attack,
             "combat_resolved": True
         }

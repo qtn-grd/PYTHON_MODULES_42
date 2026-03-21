@@ -12,7 +12,9 @@ class Rarity(Enum):
     """
     Represents card rarity levels.
     """
+
     COMMON = "Common"
+    UNCOMMON = "Uncommon"
     RARE = "Rare"
     EPIC = "Epic"
     LEGENDARY = "Legendary"
@@ -25,7 +27,8 @@ class Card(ABC):
     Attributes:
         name (str): The name of the card.
         cost (int): The mana cost to play the card.
-        rarity (str): The rarity of the card (Common, Rare, Epic, Legendary).
+        rarity (str): The rarity of the card (Common, Uncommon,
+        Rare, Epic, Legendary).
     """
 
     def __init__(self, name: str, cost: int, rarity: str) -> None:
@@ -38,18 +41,19 @@ class Card(ABC):
             rarity (str): Rarity of the card.
         """
 
-        self.name: str = name
+        self._name: str = name
+
         if not isinstance(cost, int) or cost < 0:
             raise CardError(f"Invalid cost for card {name}: {cost}")
 
-        self.cost: int = cost
+        self._cost: int = cost
 
         try:
             rarity_enum = Rarity(rarity)
         except ValueError:
             raise CardError("Invalid rarity value")
 
-        self.rarity: str = rarity_enum
+        self._rarity: str = rarity_enum.value
 
     @abstractmethod
     def play(self, game_state: dict) -> dict:
@@ -69,14 +73,14 @@ class Card(ABC):
         Returns basic information about the card.
 
         Returns:
-            dict[str, str | int]: Dictionary containing 'name', 'cost',
+            dict[str, Union[str, int]: Dictionary containing 'name', 'cost',
             and 'rarity'.
         """
 
         return {
-            "name": self.name,
-            "cost": self.cost,
-            "rarity": self.rarity
+            "name": self._name,
+            "cost": self._cost,
+            "rarity": self._rarity
         }
 
     def is_playable(self, available_mana: int) -> bool:
@@ -90,4 +94,4 @@ class Card(ABC):
             bool: True if available_mana >= cost, False otherwise.
         """
 
-        return available_mana >= self.cost
+        return available_mana >= self._cost

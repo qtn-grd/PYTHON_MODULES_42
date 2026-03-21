@@ -1,3 +1,4 @@
-# ex0/__init__.py
-# Package initialization file for ex0 (Card foundation).
-# Can be left empty for this exercise.
+from ex0.Card import Card, CardError, Rarity
+from ex0.CreatureCard import CreatureCard
+
+__all__ = ["Card", "CardError", "Rarity", "CreatureCard"]

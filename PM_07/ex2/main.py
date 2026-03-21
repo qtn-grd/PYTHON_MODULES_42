@@ -21,9 +21,12 @@ def main() -> None:
     print()
 
     capabilities: dict[str, list[str]] = {}
+
     for cls in [Card, Combatable, Magical]:
-        methods = [met for met in dir(cls)
-                   if callable(getattr(cls, met)) and not met.startswith("__")]
+        methods = [
+            name for name, value in cls.__dict__.items()
+            if callable(value) and not name.startswith("__")
+        ]
         capabilities[cls.__name__] = methods
 
     print("EliteCard capabilities:")
@@ -36,6 +39,8 @@ def main() -> None:
         arcane_warrior: EliteCard = EliteCard(
             "Arcane Warrior", 10, "Epic", 5, 10, 8
         )
+        print(f"Playing: {arcane_warrior._name} "
+              f"({type(arcane_warrior).__name__}):")
     except (CardError, TypeError) as error:
         print(f"Error creating elite card: {error}", file=sys.stderr)
         return
@@ -46,16 +51,18 @@ def main() -> None:
         print(f"Error creating creature card: {error}", file=sys.stderr)
         return
 
-    print(f"Playing: {arcane_warrior.name} ({type(arcane_warrior).__name__}):")
     print()
 
     print("Combat phase:")
 
-    att_result: dict[str, Any] = arcane_warrior.attack(enemy)
-    def_result: dict[str, Any] = arcane_warrior.defend(enemy.attack)
+    try:
+        att_result: dict[str, Any] = arcane_warrior.attack(enemy)
+        def_result: dict[str, Any] = arcane_warrior.defend(enemy._attack)
 
-    print(f"Attack result: {att_result}")
-    print(f"Defense result: {def_result}")
+        print(f"Attack result: {att_result}")
+        print(f"Defense result: {def_result}")
+    except (NameError, TypeError) as error:
+        print(f"Error: {error}", file=sys.stderr)
 
     print()
 
@@ -67,8 +74,12 @@ def main() -> None:
         "Fireball", targets)
     print(f"Spell cast: {spell_result}")
 
-    mana_result: dict[str, Any] = arcane_warrior.channel_mana(3)
-    print(f"Mana channel: {mana_result}")
+    try:
+        spring_mana: int = 3
+        mana_result: dict[str, Any] = arcane_warrior.channel_mana(spring_mana)
+        print(f"Mana channel: {mana_result}")
+    except TypeError as error:
+        print(f"Error: {error}", file=sys.stderr)
 
     print()
     print("Multiple interface implementation successful!")
