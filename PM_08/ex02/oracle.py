@@ -151,7 +151,13 @@ def main() -> None:
     print("ORACLE STATUS: Reading the Matrix...")
     print()
 
-    config = load_config()
+    try:
+        config = load_config()
+    except ModuleNotFoundError as error:
+        print(f"Error: {error}")
+        print("Add module first using following command: "
+              '"pip install python-dotenv"')
+        return
 
     is_valid = validate_config(config)
     display_status(config)
