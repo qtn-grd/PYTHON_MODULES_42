@@ -45,7 +45,9 @@ Each folder represents a standalone module.
 | PM_05 | Polymorphism, abstract base classes, duck typing                    |
 | PM_06 | Import strategies                                                   |
 | PM_07 | Polymorphism, abstract base classes, MRO                            |
-| ...       | ...                                                             |
+| PM_08 | Virtual environments, import packages, pip, poetry, dotenv, gitignore                                                                     |
+| PM_09 | ...                                                                 |
+| PM_10 | ...                                                                 |
 
 > ℹ️ For detailed explanations, refer to each module's README.
 
@@ -58,6 +60,7 @@ Each folder represents a standalone module.
 * Algorithmic thinking
 * Code organization and modular design
 * Error handling and testing
+* Import and packages gestion
 
 
 ## ⚙️ Installation

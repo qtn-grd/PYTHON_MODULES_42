@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "matrix-project"
+version = "0.1.0"
+description = "A simple data analysis tool"
+authors = ["qgairaud <qgairaud@student.42.fr>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+requests = "*"
