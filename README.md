@@ -35,19 +35,19 @@ Each folder represents a standalone module.
 
 ## 📦 Modules
 
-| Module    | Description                                                     |
-| --------- | --------------------------------------------------------------- |
-| PM_00 | Introduction to Python basics (syntax, variables, control flow)     |
-| PM_01 | Classes, encapsulation, inheritance                                 |
-| PM_02 | Errors handling, custom exceptions                                  |
-| PM_03 | Data structures, command-line arguments, comprehensions             |
-| PM_04 | File handling, streams                                              |
-| PM_05 | Polymorphism, abstract base classes, duck typing                    |
-| PM_06 | Import strategies                                                   |
-| PM_07 | Polymorphism, abstract base classes, MRO                            |
-| PM_08 | Virtual environments, import packages, pip, poetry, dotenv, gitignore                                                                     |
-| PM_09 | ...                                                                 |
-| PM_10 | ...                                                                 |
+|Module     | Description                                                         |
+|:---------:| ------------------------------------------------------------------- |
+| PM_00     | Introduction to Python basics (syntax, variables, control flow)     |
+| PM_01     | Classes, encapsulation, inheritance                                 |
+| PM_02     | Errors handling, custom exceptions                                  |
+| PM_03     | Data structures, command-line arguments, comprehensions             |
+| PM_04     | File handling, streams                                              |
+| PM_05     | Polymorphism, abstract base classes, duck typing                    |
+| PM_06     | Import strategies                                                   |
+| PM_07     | Polymorphism, abstract base classes, MRO                            |
+| PM_08     | Virtual environments, import packages, pip, poetry, dotenv          |
+| PM_09     | Data validation, nested models, pydantic                            |
+| PM_10     | ...                                                                 |
 
 > ℹ️ For detailed explanations, refer to each module's README.
 
@@ -55,12 +55,12 @@ Each folder represents a standalone module.
 ## 🧠 Skills & Concepts Covered
 
 * Python fundamentals
-* Object-Oriented Programming (OOP)
-* Functional programming
-* Algorithmic thinking
 * Code organization and modular design
+* Algorithmic thinking
+* Object-Oriented Programming (OOP)
 * Error handling and testing
-* Import and packages gestion
+* Import strategies and packages gestion
+* Data validation and setting managements
 
 
 ## ⚙️ Installation
