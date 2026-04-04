@@ -47,7 +47,7 @@ Each folder represents a standalone module.
 | PM_07     | Polymorphism, abstract base classes, MRO                            |
 | PM_08     | Virtual environments, import packages, pip, poetry, dotenv          |
 | PM_09     | Data validation, nested models, pydantic                            |
-| PM_10     | ...                                                                 |
+| PM_10     | Lambdas, Callable, closure, functools, decorators                   |
 
 > ℹ️ For detailed explanations, refer to each module's README.
 
