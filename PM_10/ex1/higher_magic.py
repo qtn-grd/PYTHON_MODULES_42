@@ -44,9 +44,8 @@ def heal(target: str, power: int) -> str:
 
 
 def spell_combiner(
-        spell1: Callable[[str, int], str],
-        spell2: Callable[[str, int], str]) -> Callable[
-            [str, int], tuple[str, str]]:
+        spell1: Callable,
+        spell2: Callable) -> Callable:
     """Combine two spells into one that returns both results."""
 
     def combined(target: str, power: int) -> tuple[str, str]:
@@ -55,8 +54,8 @@ def spell_combiner(
     return combined
 
 
-def power_amplifier(base_spell: Callable[[str, int], str],
-                    multiplier: int) -> Callable[[str, int], str]:
+def power_amplifier(base_spell: Callable,
+                    multiplier: int) -> Callable:
     """Amplify a spell's power by a multiplier."""
 
     def amplified(target: str, power: int) -> str:
@@ -66,8 +65,8 @@ def power_amplifier(base_spell: Callable[[str, int], str],
 
 
 def conditional_caster(
-        condition: Callable[[str, int], bool],
-        spell: Callable[[str, int], str]) -> Callable[[str, int], str]:
+        condition: Callable,
+        spell: Callable) -> Callable:
     """Cast a spell only if a condition is met."""
 
     def casted(target: str, power: int) -> str:
@@ -79,8 +78,7 @@ def conditional_caster(
 
 
 def spell_sequence(
-        spells: List[Callable[[str, int], str]]) -> Callable[
-            [str, int], List[str]]:
+        spells: List[Callable]) -> Callable:
     """Execute a sequence of spells."""
 
     def chained(target: str, power: int) -> List[str]:

@@ -15,7 +15,7 @@ def spell_reducer(spells: list[int], operation: str) -> int:
 
     if not spells:
         return 0
-    operations_dict = {
+    operations_dict: dict[str, Callable[..., Any]] = {
         "add": operator.add,
         "multiply": operator.mul,
         "max": max,
@@ -77,14 +77,14 @@ def test_spell_reducer() -> None:
     print()
 
 
-def partial_enchanter(base_enchantment: Callable[
-        [int, str, str], str]) -> dict[str, Callable[[str], str]]:
+def partial_enchanter(base_enchantment: Callable
+                ) -> dict[str, Callable]:
     """Create predefined elemental enchantments using partial application."""
 
     fire = functools.partial(base_enchantment, 50, "Fire")
     earth = functools.partial(base_enchantment, 50, "Earth")
     wind = functools.partial(base_enchantment, 50, "Wind")
-    enchantment_dict = {"fire": fire, "earth": earth, "wind": wind}
+    enchantment_dict: dict[str, Callable[..., Any]] = {"fire": fire, "earth": earth, "wind": wind}
     return enchantment_dict
 
 

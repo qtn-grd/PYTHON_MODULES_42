@@ -3,7 +3,7 @@ from typing import Any
 import sys
 
 
-def mage_counter() -> Callable[[], int]:
+def mage_counter() -> Callable:
     """Create a counter that increments each time it is called."""
     count = 0
 
@@ -42,7 +42,7 @@ def test_mage_counter() -> None:
     print()
 
 
-def spell_accumulator(initial_power: int) -> Callable[[int], int]:
+def spell_accumulator(initial_power: int) -> Callable:
     """Accumulate power over multiple calls."""
 
     def accumulator(power_addition: int) -> int:
@@ -75,7 +75,7 @@ def test_spell_accumulator() -> None:
     print()
 
 
-def enchantment_factory(enchantment_type: str) -> Callable[[str], str]:
+def enchantment_factory(enchantment_type: str) -> Callable:
     """Create an enchantment function based on type."""
 
     def enchant(item: str) -> str:
