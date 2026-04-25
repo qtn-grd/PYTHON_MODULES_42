@@ -8,12 +8,9 @@ This first module provides an introduction to Python and helps build familiarity
 
 * Basic typing
 * Conditional statements
-* Formatted strings (f-strings)
+* Formatted strings _(f-strings)_
 * Loops
 * Variables
+* Recursivity
 
-### Functions Used
 
-* `print()`
-* `input()`
-* `str.capitalize()`
