@@ -1,23 +1,32 @@
-#!/usr/bin/env python3
-
-
 class Plant:
-    """A simple object representing a plant that can grow and age."""
+    """Represents a plant with a name, height (in cm), and age (in days)."""
 
     def __init__(self, name: str, height: int, age: int) -> None:
-        """Initialize the plant with a name, height, and age."""
-        self.name = name
+        """Initialize a new Plant instance."""
+
+        self.name = name.capitalize()
         self.height = height
         self.age = age
 
+    def show(self) -> None:
+        """Display the plant's information in a formatted string."""
 
-rose = Plant("Rose", 25, 30)
-sunflower = Plant("Sunflower", 80, 45)
-cactus = Plant("Cactus", 15, 120)
-garden = [rose, sunflower, cactus]
+        print(f"{self.name}: {self.height}cm, {self.age} days old")
 
-if __name__ == "__main__":
+
+def main() -> None:
+    """Create several Plant instances and display their information."""
+
+    rose = Plant("rose", 25, 30)
+    sunflower = Plant("sunflower", 80, 45)
+    cactus = Plant("cactus", 15, 120)
+
+    garden: list[Plant] = [rose, sunflower, cactus]
 
     print("=== Garden Plant Registry ===")
     for plant in garden:
-        print(f"{plant.name}: {plant.height}cm, {plant.age} days old")
+        plant.show()
+
+
+if __name__ == "__main__":
+    main()

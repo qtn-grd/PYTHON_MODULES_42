@@ -2,23 +2,16 @@
 
 **Object-Oriented Garden Systems**
 
-This module introduces core object-oriented programming concepts, including classes, encapsulation, and inheritance. It also explores different ways to read and understand Python `.py` files.
+This module introduces core object-oriented programming concepts, including classes, nested classes, encapsulation and inheritance. It also explores different ways to access and use Python `.py` files.
 
 ### Concepts Covered
 
 * Shebang
 * Docstrings
-* Lists
 * Factory pattern
 * Encapsulation
 * Inheritance
+* Nested classes
 * Instance methods
 * Static methods
 * Class methods
-
-### Functions Used
-
-* `list.append()`
-* `len()`
-* `super()`
-* `isinstance()`

@@ -1,37 +1,48 @@
-#!/usr/bin/env python3
-
-
 class Plant:
-    """A simple object representing a plant that can grow and age."""
+    """Represents a plant with a name, height (in cm), and age (in days)."""
 
-    def __init__(self, name: str, height: int, days_old: int) -> None:
-        """Initialize the plant with a name, height, and age."""
-        self.name = name
+    def __init__(self, name: str, height: float, age: int) -> None:
+        """Initialize a new Plant instance."""
+
+        self.name = name.capitalize()
         self.height = height
-        self.old = days_old
+        self.age = age
 
-    def age(self, x: int) -> None:
-        """Increase the plant's age by a given number of days."""
-        self.old += x
+    def show(self) -> None:
+        """Print the plant's current information."""
 
-    def grow(self, y: int) -> None:
-        """Increase the plant's height by a given amount."""
-        self.height += y
+        print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
-    def get_info(self) -> None:
-        """Display the current information of the plant."""
-        print(f"{self.name}: {self.height}cm, {self.old} days old")
+    def grow(self, growing: float) -> None:
+        """Increase the plant's height."""
+
+        self.height += growing
+
+    def grow_older(self, aging: int) -> None:
+        """Increase the plant's age."""
+
+        self.age += aging
 
 
-rose = Plant("Rose", 25, 30)
-time = 6
+def main() -> None:
+    """Simulate the growth of a plant over several days."""
+
+    rose = Plant("rose", 25.0, 30)
+
+    print("=== Garden Plant Growth ===")
+    rose.show()
+
+    days: int = 7
+    growing: float = 0.8
+
+    for day in range(1, days + 1):
+        print(f"=== Day {day} ===")
+        rose.grow(growing)
+        rose.grow_older(1)
+        rose.show()
+
+    print(f"Growth this week: {days * growing:.1f}cm")
+
 
 if __name__ == "__main__":
-
-    print("=== Day 1 ===")
-    rose.get_info()
-    rose.age(time)
-    rose.grow(time)
-    print("=== Day", 1 + time, "===")
-    rose.get_info()
-    print(f"Growth this week: +{time} cm")
+    main()

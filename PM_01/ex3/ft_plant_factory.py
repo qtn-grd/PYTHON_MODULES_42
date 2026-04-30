@@ -1,60 +1,40 @@
-#!/usr/bin/env python3
-
-
 class Plant:
-    """A plant object that can grow and age over time."""
+    """Represents a plant with a name, height (in cm), and age (in days)."""
 
-    def __init__(self, name: str, height: int, days_old: int) -> None:
-        """Initialize the plant with a name, height, and age in days."""
-        self.name = name
+    def __init__(self, name: str, height: float, age: int) -> None:
+        """Initialize a Plant instance."""
+
+        self.name = name.capitalize()
         self.height = height
-        self.old = days_old
+        self.age = age
 
-    def age(self, x: int) -> None:
-        """Increase the plant's age by a given number of days."""
-        self.old += x
+    def show(self) -> str:
+        """Return the plant's current information."""
 
-    def grow(self, y: int) -> None:
-        """Increase the plant's height by a given amount."""
-        self.height += y
-
-    def get_info(self) -> None:
-        """Display the current information of the plant."""
-        print(f"{self.name}: {self.height}cm, {self.old} days old")
+        return (f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
 
-class Factory:
-    """A factory class responsible for creating and storing plant objects."""
+def plant_factory(name: str, height: float, age: int) -> Plant:
+    """Create and return a Plant instance."""
 
-    def __init__(self) -> None:
-        """Create an empty garden to store plants."""
-        self.garden: list[Plant] = []
+    return Plant(name, height, age)
 
-    def add_plant(self, plant: Plant) -> None:
-        """Add a plant to the garden."""
-        self.garden.append(plant)
+
+def main() -> None:
+    """Create multiple plants using the factory and display them."""
+
+    new = [
+        ("rose", 25.0, 30),
+        ("oak", 200.0, 365),
+        ("cactus", 5.0, 90),
+        ("sunflower", 80.0, 45),
+        ("fern", 15.0, 120)
+    ]
+
+    for p_name, p_height, p_age in new:
+        plant = plant_factory(p_name, p_height, p_age)
+        print("Created:", plant.show())
 
 
 if __name__ == "__main__":
-
-    print("=== Plant Factory Output ===")
-    addnew = [
-        ("Rose", 25, 30),
-        ("Oak", 200, 365),
-        ("Cactus", 5, 90),
-        ("Sunflower", 80, 45),
-        ("Fern", 15, 20)
-    ]
-
-    factory = Factory()
-    garden = factory.garden
-
-    for name, height, days in addnew:
-        factory.add_plant(Plant(name, height, days))
-
-    for plant in garden:
-        print(f"Created: {plant.name} ({plant.height}cm, "
-              f"{plant.old} days)")
-
-    print()
-    print(f"Total plants created: {len(garden)}")
+    main()
