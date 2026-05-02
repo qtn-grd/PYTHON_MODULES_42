@@ -37,7 +37,7 @@ class Flower(Plant):
             age: int,
             color: str,
             bloomed: bool
-        ) -> None:
+    ) -> None:
         """Initialize a Flower instance."""
 
         super().__init__(name, height, age)
@@ -67,7 +67,7 @@ class Tree(Plant):
             height: float,
             age: int,
             diameter: float,
-        ) -> None:
+    ) -> None:
         """Initialize a Tree instance."""
 
         super().__init__(name, height, age)
@@ -90,7 +90,9 @@ class Vegetable(Plant):
             age: int,
             season: str,
             nutrit: int
-        ) -> None:
+    ) -> None:
+        """Initialize a Vegetable instance."""
+
         super().__init__(name, height, age)
         self._season = season.capitalize()
         self._nutrit = nutrit

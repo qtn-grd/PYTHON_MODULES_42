@@ -2,6 +2,7 @@ RED = "\033[31m"
 GREEN = "\033[32m"
 RESET = "\033[0m"
 
+
 class Plant:
     """Represents a plant with a name, height (in cm), and age (in days)."""
 
@@ -45,7 +46,7 @@ class Plant:
             print(f"{GREEN}Age updated: {self.get_age()} days{RESET}")
         else:
             print(f"{self._name}: {RED}Error, age can't be negative{RESET}")
-            print(f"Age update rejected")
+            print("Age update rejected")
 
 
 def main() -> None:

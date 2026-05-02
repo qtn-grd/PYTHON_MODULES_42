@@ -71,7 +71,7 @@ class Plant:
 
         return cls("unknown plant", 0.0, 0)
 
-        
+
 class Flower(Plant):
     """Represents a flower with a color and blooming state."""
     def __init__(
@@ -81,7 +81,7 @@ class Flower(Plant):
             age: int,
             color: str,
             bloomed: bool
-        ) -> None:
+    ) -> None:
         """Initialize a Flower instance."""
 
         super().__init__(name, height, age)
@@ -111,7 +111,7 @@ class Tree(Plant):
             height: float,
             age: int,
             diameter: float,
-        ) -> None:
+    ) -> None:
         """Initialize a Tree instance."""
 
         super().__init__(name, height, age)
@@ -135,11 +135,10 @@ class Seed(Flower):
             age: int,
             color: str,
             bloomed: bool
-        ) -> None:
+    ) -> None:
         """Initialize a Flower instance."""
 
         super().__init__(name, height, age, color, bloomed)
-
 
     def seeds_quantity(self) -> int:
         """Determine seed count according if flower already bloomed."""
@@ -158,8 +157,8 @@ def checking_values() -> None:
 
     print("=== Check year-old ===")
     print()
-    print(f"Is 30 days more than a year? ->", Plant.check_aging(30))
-    print(f"Is 400 days more than a year? ->", Plant.check_aging(400))
+    print("Is 30 days more than a year? ->", Plant.check_aging(30))
+    print("Is 400 days more than a year? ->", Plant.check_aging(400))
 
 
 def flower_test() -> None:
@@ -278,7 +277,7 @@ def main() -> None:
     print()
     flower_test()
     print()
-    
+
     print()
     tree_test()
     print()

@@ -1,40 +1,38 @@
-#!/usr/bin/env python3
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+RESET = "\033[0m"
 
 
-def check_temperature(temp_str: str) -> int:
-    """Check if temperature is valid"""
+def input_temperature(temp_str: str) -> int:
+    """Convert a string representing a temperature into an integer."""
 
-    try:
-        temp = int(temp_str)
-    except ValueError:
-        raise ValueError(f"'{temp_str}' is not a valid number")
-
-    if temp < 0:
-        raise ValueError(f"{temp} is too cold for plants (min 0°C)")
-    if temp > 40:
-        raise ValueError(f"{temp} is too hot for plants (max 40°C)")
-    return temp
+    return int(temp_str)
 
 
-def test_temperature_input() -> None:
-    """Test valid and invalid temperature inputs"""
+def test_temperature() -> None:
+    """Test the input_temperature function with valid and invalid inputs."""
 
-    print("=== Garden Temperature Checker ===")
+    print("=== Garden Temperature ===")
+    print()
 
-    tests = ["25", "abc", "100", "-50"]
+    tests = ["25", "abc"]
 
-    for value in tests:
-        print()
-        print(f"Testing temperature: {value}")
+    for test in tests:
+
+        print(f"Input data is '{YELLOW}{test}{RESET}'")
+
         try:
-            temp = check_temperature(value)
-            print(f"Temperature {temp}°C is perfect for plants!")
+            result = input_temperature(test)
+            print(f"{GREEN}Temperature is now {result}°C{RESET}")
+            print()
+
         except ValueError as error:
-            print(f"Error: {error}")
+            print(f"{RED}Caught input_temperature error: {error}{RESET}")
 
     print()
     print("All tests completed - program didn't crash!")
 
 
 if __name__ == "__main__":
-    test_temperature_input()
+    test_temperature()
