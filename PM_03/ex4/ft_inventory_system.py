@@ -1,224 +1,114 @@
-#!/usr/bin/env python3
-
 import sys
 
 
-def check_key(bag: dict[str, int], item: str) -> None:
-    """Check if a specific item exists in the inventory and print result."""
-    found = False
+def get_inventory(args: list[str]) -> dict[str, int]:
+    """Parse command-line arguments into an inventory dictionary.
+    Each argument must follow the format 'item:quantity'.
+    Invalid parameters and duplicates are reported and discarded."""
 
-    for key, value in bag.items():
-        if key == item and value > 0:
-            found = True
-    if found:
-        print(f"Sample lookup - '{item}' is in inventory :-)")
-        print("You can have it!")
-    else:
-        print(f"Sample lookup - '{item}' is not in inventory :-(")
-        print("Go back exploring!")
+    inventory = {}
 
-
-def dictionary_resume(bag: dict[str, int]) -> None:
-    """Print the keys and values of the inventory dictionary."""
-
-    print("=== Dictionary Properties Demo ===")
-    print("Dictionary keys: ", end="")
-    first = True
-    for key in bag.keys():
-        if not first:
-            print(", ", end="")
-        print(key, end="")
-        first = False
-    print()
-
-    print("Dictionary values: ", end="")
-    first = True
-    for value in bag.values():
-        if not first:
-            print(", ", end="")
-        print(value, end="")
-        first = False
-    print()
-
-
-def evaluate_bag(bag: dict[str, int]) -> None:
-    """Categorize items and display recommendations."""
-
-    moderate_bag: dict[str, int] = dict()
-    scarce_bag: dict[str, int] = dict()
-    restock_bag: dict[str, int] = dict()
-
-    moderate: int = 5
-
-    for item, qty in bag.items():
-        if qty >= moderate:
-            moderate_bag.update({item: qty})
-        else:
-            scarce_bag.update({item: qty})
-        if qty == 1 or qty == 0:
-            restock_bag.update({item: qty})
-
-    print("=== Item Categories ===")
-
-    print(f"Moderate: {moderate_bag}")
-    print(f"Scarce: {scarce_bag}")
-    print()
-
-    print("=== Management Suggestions ===")
-    print(f"Restock needed: {list(restock_bag)}")
-    print()
-
-
-def study_bag(bag: dict[str, int]) -> None:
-    """Display total items, unique types, sorted inventory,
-    and abundance statistics."""
-
-    unique_types = 0
-    total_items = 0
-    for item, qty in bag.items():
-        if qty < 0:
-            raise ValueError(f"Inventory contains negative quantity for "
-                             f"item '{item}'")
-        unique_types += 1
-        total_items += qty
-
-    print(f"Total items in inventory: {total_items}")
-    if total_items <= 0:
-        raise ValueError("Inventory total items <= 0")
-
-    print(f"Unique item types: {unique_types}")
-    print()
-
-    print("=== Current Inventory ===")
-
-    copy_bag: dict[str, int] = dict(bag)
-
-    while len(copy_bag) > 0:
-
-        max_qty = -1
-        max_item = ""
-        for item, qty in copy_bag.items():
-            if qty > max_qty:
-                max_qty = qty
-                max_item = item
-
-        percent = (max_qty / total_items) * 100
-
-        if max_qty == 1:
-            print(f"{max_item}: {max_qty} unit ({percent:.1f}%)")
-        else:
-            print(f"{max_item}: {max_qty} units ({percent:.1f}%)")
-
-        copy_bag.pop(max_item)
-
-    max_qty: int = -1
-    min_qty: int | None = None
-    most_abundant: str = ""
-    least_abundant: str = ""
-
-    for item, qty in bag.items():
-
-        if qty > max_qty:
-            max_qty = qty
-            most_abundant = item
-        if min_qty is None or qty < min_qty:
-            min_qty = qty
-            least_abundant = item
-
-    print()
-    print("=== Inventory Statistics ===")
-
-    if max_qty > 1:
-        print(f"Most abundant: {most_abundant} ({max_qty} units)")
-    else:
-        print(f"Most abundant: {most_abundant} ({max_qty} unit)")
-    if min_qty > 1:
-        print(f"Least abundant: {least_abundant} ({min_qty} units)")
-    else:
-        print(f"Least abundant: {least_abundant} ({min_qty} unit)")
-
-    print()
-
-
-def parse_arguments(arguments: list[str]) -> dict[str, int]:
-    """Parse command-line arguments into an inventory dictionary."""
-
-    bag: dict[str, int] = dict()
-
-    for arg in arguments:
-        separator = 0
-        for charac in arg:
-            if charac == ':':
-                separator += 1
-        if separator != 1:
-            raise ValueError(f"Invalid argument format: '{arg}'")
-
-    for arg in arguments:
-        key_str: str = ""
-        value_str: str = ""
-        separator = False
-
-        for charac in arg:
-            if charac == ':':
-                separator = True
-                continue
-            if not separator:
-                key_str += charac
-            else:
-                value_str += charac
+    for arg in args:
 
         try:
-            value_int = int(value_str)
+            adding = True
+
+            arg_key, arg_value = arg.split(":")
+
+            arg_key = arg_key.strip().lower()
+            arg_value = arg_value.strip()
+            if arg_key in inventory:
+                print(f"Redundant item '{arg_key}' - discarding")
+                adding = False
+                continue
+
         except ValueError:
-            raise ValueError(f"Invalid quantity of item: '{arg}'")
+            print(f"Error - invalid parameter '{arg}'")
+            adding = False
+            continue
 
-        if value_int < 0:
-            raise ValueError(f"Negative quantity not allowed for "
-                             f"item '{key_str}'")
+        try:
+            int_value = int(arg_value)
+            if int_value == 0:
+                raise ValueError("nul value - rejected")
+            if int_value < 0:
+                raise ValueError("negative value - rejected")
+        except ValueError as error:
+            print(f"Quantity error for '{arg_key}': {error}")
+            adding = False
 
-        bag.update({key_str: value_int})
+        if adding:
+            inventory[arg_key] = int_value
 
-    return bag
+    print()
+    print(f"Got inventory: {inventory}")
+    print()
+
+    return inventory
 
 
-def inventory_system() -> None:
-    """Entry point of the inventory system."""
+def study_inventory(inventory: dict[str, int]) -> None:
+    """Analyze and display information about the inventory."""
+
+    item_list = list(inventory.keys())
+
+    print(f"Item list: {item_list}")
+
+    total_quantity = sum(inventory.values())
+
+    print(f"Total quantity of the {len(item_list)} items: {total_quantity}")
+    print()
+
+    most_abundant = ""
+    least_abundant = ""
+    max_quantity = 1
+    min_quantity = 1
+    first_item = True
+
+    for item_name, item_quantity in inventory.items():
+        print(f"Item {item_name} represents "
+              f"{round((item_quantity/total_quantity)*100, 1)}%")
+
+        if first_item:
+            most_abundant = item_name
+            least_abundant = item_name
+            max_quantity = item_quantity
+            min_quantity = item_quantity
+            first_item = False
+        else:
+            if item_quantity < min_quantity:
+                least_abundant = item_name
+                min_quantity = item_quantity
+
+        if item_quantity > max_quantity:
+            most_abundant = item_name
+            max_quantity = item_quantity
+
+    print()
+    print("Item most abundant: "
+          f"{most_abundant} with quantity {max_quantity}")
+    print("Item least abundant: "
+          f"{least_abundant} with quantity {min_quantity}")
+
+
+def main():
+    """Entry point of the inventory system program."""
 
     print("=== Inventory System Analysis ===")
     print()
-    arguments: list[str] = sys.argv[1:]
 
-    if not arguments:
-        print("Error: No items found... continue exploring!")
-        return
+    inventory = get_inventory(sys.argv[1:])
 
-    try:
-        bag = parse_arguments(arguments)
-    except ValueError as error:
-        print(f"Error parsing inventory : {error}!")
-        return
+    if inventory:
+        study_inventory(inventory)
+    else:
+        print("Inventory is empty!")
 
-    print("Inventory successfully parsed!")
-    print()
-
-    try:
-        study_bag(bag)
-    except ValueError:
-        print("Error: No items found... continue exploring!")
-        return
-
-    evaluate_bag(bag)
-
-    dictionary_resume(bag)
+    inventory.update({"magic_item": 1})
 
     print()
-    print("=== Item Recuperation ===")
-    print("What are you looking for ?")
-    print()
-    looking_for: str = input()
-    print()
-    check_key(bag, looking_for)
+    print(f"Updated inventory: {inventory}")
 
 
 if __name__ == "__main__":
-    inventory_system()
+    main()

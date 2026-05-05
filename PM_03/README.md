@@ -12,21 +12,20 @@ This module explores Python’s core data structures, as well as handling comman
 * Sets
 * Generators
 * `yield`
-* Time module
+* random
 
-### Functions Used
+## Questions
 
-* `sum()`
-* `max()`
-* `min()`
-* `set.union()`
-* `set.intersection()`
-* `set.difference()`
-* `dict.keys()`
-* `dict.values()`
-* `dict.items()`
-* `dict.update()`
-* `dict.pop()`
-* `iter()`
-* `sorted()`
-* `dict.get()`
+### Q.1
+
+How does Python print an empty set ? Why ?
+
+### R.1
+
+Python print an empty set like this: 
+    `set()`
+
+and not like this:
+    `{}`
+
+to avoid confusion, because second example refers to an empty dict.

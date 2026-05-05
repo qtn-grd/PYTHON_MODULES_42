@@ -1,100 +1,81 @@
-#!/usr/bin/env python3
-
-import sys
 import math
 
 
 def calculate_distance(
         one: tuple[float, float, float],
-        two: tuple[float, float, float]
+        two: tuple[float, float, float],
 ) -> float:
     """Compute the Euclidean distance between two 3D points."""
-    x1, y1, z1 = one
-    x2, y2, z2 = two
 
-    result = math.sqrt(
-        (x2 - x1) ** 2 +
-        (y2 - y1) ** 2 +
-        (z2 - z1) ** 2
+    X1, Y1, Z1 = one
+    X2, Y2, Z2 = two
+
+    return math.sqrt(
+        (X1 - X2) ** 2 +
+        (Y1 - Y2) ** 2 +
+        (Z1 - Z2) ** 2
     )
 
-    return result
+
+def get_player_pos() -> tuple[float, float, float]:
+    """Prompt the user to input 3D coordinates until valid input is provided.
+    The expected format is 'x,y,z'. Each value must be convertible to float.
+    Displays appropriate error messages for invalid syntax or values."""
+
+    while True:
+
+        coordinates = input(
+            "Enter new coordinates as floats in format 'x,y,z': ")
+
+        parts = coordinates.split(",")
+
+        if len(parts) != 3:
+            print("Invalid syntax")
+            continue
+
+        try:
+            X = float(parts[0].strip())
+            Y = float(parts[1].strip())
+            Z = float(parts[2].strip())
+            return X, Y, Z
+
+        except ValueError as error:
+            for elem in parts:
+                try:
+                    float(elem.strip())
+                except ValueError:
+                    print(f"Error on parameter {elem}: {error}")
+                    break
 
 
-def parse_coordinates(
-    coord: list[str],
-) -> tuple[
-    tuple[float, float, float],
-    tuple[float, float, float],
-]:
-    """Parse command-line arguments into two 3D points."""
-
-    splited_coord: list[str] = []
-
-    for elem in coord:
-        transite_coord: list[str] = elem.split()
-        for new in transite_coord:
-            splited_coord.append(new)
-
-    try:
-        values = [float(x) for x in splited_coord]
-    except ValueError as error:
-        raise ValueError(f"{error}")
-
-    if len(values) not in (3, 6):
-        raise ValueError("invalid number of coordinates, "
-                         "please enter 3 or 6 numeric values")
-
-    if len(values) == 3:
-        start = tuple([0.0, 0.0, 0.0])
-        end = tuple(values)
-    else:
-        start = tuple([values[0], values[1], values[2]])
-        end = tuple([values[3], values[4], values[5]])
-
-    return start, end
-
-
-def game_coordinate() -> None:
-    """Entry point for the coordinate distance calculator."""
+def main() -> None:
+    """Run the 3D coordinate system program."""
 
     print("=== Game Coordinate System ===")
     print()
 
-    arguments: list[str] = sys.argv[1:]
+    center = (0.0, 0.0, 0.0)
 
-    if not arguments:
-        print("Error: missing coordinates, "
-              "please enter 3 or 6 numeric values")
-        return
+    print("Get a first set of coordinates")
 
-    try:
-        start, end = parse_coordinates(arguments)
-    except ValueError as error:
-        print(f"Error: parsing invalid coordinates: {arguments}")
-        print(f"{error}")
-        return
+    x1, y1, z1 = get_player_pos()
+    first_set = (x1, y1, z1)
 
-    print()
-    print(f"Parsing coordinates {arguments}")
-    print()
-    print(f"Parse position one: {start}")
-    print(f"Parse position two: {end}")
+    print(f"Got a first tuple: {first_set}")
+    print(f"It includes: X={x1}, Y={y1}, Z={z1}")
+
+    print("Distance to center: "
+          f"{round(calculate_distance(first_set, center), 4)}")
     print()
 
-    distance = calculate_distance(start, end)
+    print("Get a second set of coordinates")
 
-    print(f"Distance between position one and position two: {distance:.2f}")
+    x2, y2, z2 = get_player_pos()
+    second_set = (x2, y2, z2)
 
-    print()
-    print()
-
-    print("Unpacking demonstration:")
-    print()
-    print(f"Player at x={start[0]:.2f}, y={start[1]:.2f}, z={start[2]:.2f}")
-    print(f"Coordinates: X={end[0]:.2f}, Y={end[1]:.2f}, Z={end[2]:.2f}")
-    print()
+    print("Distance between the 2 sets of coordinates: "
+          f"{round(calculate_distance(second_set, first_set), 4)}")
 
 
 if __name__ == "__main__":
-    game_coordinate()
+    main()

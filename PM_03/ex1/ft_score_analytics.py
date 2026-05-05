@@ -1,57 +1,47 @@
-#!/usr/bin/env python3
-
 import sys
 
 
-def score_cruncher() -> None:
-    """Compare scores found in command-line arguments."""
-    print("=== Player Score Analytics ===")
-    arguments: list[str] = sys.argv[1:]
+def score_analytics() -> None:
+    """Analyze player scores provided as command-line arguments."""
 
-    if not arguments:
+    print("=== Player Score Analytics ===")
+    print()
+
+    args = sys.argv[1:]
+    valid_scores = []
+    errors = []
+
+    for arg in args:
+        try:
+            score = int(arg)
+            if score >= 0:
+                valid_scores.append(score)
+            else:
+                errors.append(arg)
+        except ValueError:
+            errors.append(arg)
+
+    if errors:
+        for error in errors:
+            print(f"Invalid parameter: '{error}'")
         print()
-        print("No scores provided. Usage: python3 ft_score_analytics.py"
-              " <score1> <score2> ...")
+
+    if not valid_scores:
+        print("No scores provided. Usage: "
+              "python3 ft_score_analytics.py <score1> <score2> ...")
         return
 
-    else:
-        scores: list[int] = []
-        negatives: int = 0
-        for arg in arguments:
-            try:
-                score = int(arg)
-                if score < 0:
-                    negatives += 1
-                scores.append(score)
-            except ValueError:
-                print()
-                print(f"Error: '{arg}' is not a valid integer.")
-                return
+    total = sum(valid_scores)
+    count = len(valid_scores)
 
-        print()
-        print(f"Scores processed: {scores}")
-
-        if negatives == 1:
-            print()
-            print(f"WARNING: {negatives} score is negative!")
-        elif negatives > 1:
-            print()
-            print(f"WARNING: {negatives} scores are negative!")
-
-        players: int = len(scores)
-        total: int = sum(scores)
-        highest: int = max(scores)
-        lowest: int = min(scores)
-        average: float = total / players
-
-        print()
-        print(f"Total players: {players}")
-        print(f"Total score: {total}")
-        print(f"Average score: {average:.2f}")
-        print(f"High score: {highest}")
-        print(f"Low score: {lowest}")
-        print(f"Score range: {highest - lowest}")
+    print(f"Scores processed: {valid_scores}")
+    print(f"Total players: {count}")
+    print(f"Total score: {total}")
+    print(f"Average score: {total / count}")
+    print(f"High score: {max(valid_scores)}")
+    print(f"Low score: {min(valid_scores)}")
+    print(f"Score range: {max(valid_scores) - min(valid_scores)}")
 
 
 if __name__ == "__main__":
-    score_cruncher()
+    score_analytics()

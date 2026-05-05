@@ -1,61 +1,61 @@
-#!/usr/bin/env python3
+import random
 
 
-def achievement_tracker() -> None:
-    """Analyze player achievements using set operations."""
+def gen_player_achievements(achievements_pool: list[str]) -> set[str]:
+    """Generate a random set of unique achievements for a player.
+    A random number of achievements is selected from a predefined pool,
+    ensuring no duplicates using random sampling."""
+
+    return set(random.sample(
+        achievements_pool, random.randrange(1, len(achievements_pool) + 1)))
+
+
+def main() -> None:
+    """Run the achievement tracking system."""
 
     print("=== Achievement Tracker System ===")
     print()
 
-    alice_set: set[str] = {
-        'first_kill', 'level_10', 'treasure_hunter', 'speed_demon'}
-    bob_set: set[str] = {'first_kill', 'level_10', 'boss_slayer', 'collector'}
-    charlie_set: set[str] = {
-        'level_10', 'treasure_hunter', 'boss_slayer', 'speed_demon',
-        'perfectionist'
-    }
+    achievements_pool = [
+        'Crafting Genius', 'Strategist', 'World Savior',
+        'Speed Runner', 'Survivor', 'Master Explorer',
+        'Treasure Hunter', 'Unstoppable', 'First Steps',
+        'Collector Supreme', 'Untouchable', 'Sharp Mind', 'Boss Slayer']
 
-    print(f"Player alice achievements: {alice_set}")
-    print(f"Player bob achievements: {bob_set}")
-    print(f"Player charlie achievements: {charlie_set}")
+    all_achievements = set(achievements_pool)
+    alice = gen_player_achievements(achievements_pool)
+    bob = gen_player_achievements(achievements_pool)
+    charlie = gen_player_achievements(achievements_pool)
+    dylan = gen_player_achievements(achievements_pool)
+
+    print(f"Player Alice: {alice}")
+    print(f"Player Bob: {bob}")
+    print(f"Player Charlie: {charlie}")
+    print(f"Player Dylan: {dylan}")
 
     print()
-    print("=== Achievement Analytics ===")
+
+    print(f"All distinct achievements: {all_achievements}")
+
     print()
 
-    union_set: set[str] = alice_set.union(bob_set, charlie_set)
-    total_intersection_set: set[str] = alice_set.intersection(
-        bob_set, charlie_set)
+    common_achievements = alice & bob & charlie & dylan
+    print(f"Common achievements: {common_achievements}")
 
-    alice_bob_intersection_set: set[str] = alice_set.intersection(bob_set)
-    alice_charlie_intersection_set: set[str] = alice_set.intersection(
-        charlie_set)
-    bob_charlie_intersection_set: set[str] = bob_set.intersection(
-        charlie_set)
-
-    alice_bob_difference_set: set[str] = alice_set.difference(bob_set)
-    bob_alice_difference_set: set[str] = bob_set.difference(alice_set)
-
-    shared_by_any_two: set[str] = (
-        alice_bob_intersection_set
-        .union(alice_charlie_intersection_set)
-        .union(bob_charlie_intersection_set)
-    )
-
-    rarity_set: set[str] = union_set.difference(shared_by_any_two)
-
-    print(f"All unique achievements: {union_set}")
-    print(f"Total unique achievements: {len(union_set)}")
     print()
 
-    print(f"Common to all players: {total_intersection_set}")
-    print(f"Rare achievements (1 player): {rarity_set}")
+    print(f"Only Alice has: {alice.difference(bob | charlie | dylan)}")
+    print(f"Only Bob has: {bob.difference(alice | charlie | dylan)}")
+    print(f"Only Charlie has: {charlie.difference(alice | bob | dylan)}")
+    print(f"Only Dylan has: {dylan.difference(alice | bob | charlie)}")
+
     print()
 
-    print(f"Alice vs Bob common: {alice_bob_intersection_set}")
-    print(f"Alice unique: {alice_bob_difference_set}")
-    print(f"Bob unique: {bob_alice_difference_set}")
+    print(f"Alice is missing: {all_achievements.difference(alice)}")
+    print(f"Bob is missing: {all_achievements.difference(bob)}")
+    print(f"Charlie is missing: {all_achievements.difference(charlie)}")
+    print(f"Dylan is missing: {all_achievements.difference(dylan)}")
 
 
 if __name__ == "__main__":
-    achievement_tracker()
+    main()

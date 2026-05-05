@@ -1,25 +1,26 @@
-#!/usr/bin/env python3
-
 import sys
 
 
 def command_quest() -> None:
-    """Display information about command-line arguments."""
+    """Display command-line arguments passed to the script."""
 
     print("=== Command Quest ===")
-    arguments: list[str] = sys.argv[1:]
+    print()
 
-    if not arguments:
+    args = sys.argv
+
+    print(f"Program name: {args[0]}")
+
+    if len(args) == 1:
         print("No arguments provided!")
-        print(f"Program name: {sys.argv[0]}")
     else:
-        count: int = 1
-        print(f"Program name: {sys.argv[0]}")
-        print(f"Arguments received: {len(arguments)}")
-        for arg in arguments:
-            print(f"Argument {count}: {arg}")
-            count += 1
-    print(f"Total arguments: {len(sys.argv)}")
+        listing = args[1:]
+        print(f"Arguments received: {len(listing)}")
+        for position, arg in enumerate(listing, start=1):
+            print(f"Argument {position}: {arg}")
+            position += 1
+
+    print(f"Total arguments: {len(args)}")
 
 
 if __name__ == "__main__":
