@@ -1,46 +1,47 @@
-#!/usr/bin/env python3
-
-from typing import TextIO
+import sys
 
 
-def ancient_text() -> None:
-    """Reads 'ancient_fragment.txt' file and displays its content
-    as part of the cyber archive recovery process.
+GREEN = "\033[32m"
+RED = "\033[31m"
+YELLOW = "\033[33m"
+RESET = "\033[0m"
 
-    If the file does not exist, an error message is displayed."""
 
-    print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
+def read_file() -> None:
+    """Read and display the content of a file."""
+
+    print("=== Cyber Archives Recovery ===")
     print()
-    print("Accessing Storage Vault: ancient_fragment.txt")
 
     try:
-        file: TextIO = open("ancient_fragment.txt", "r")
-    except FileNotFoundError as error:
-        raise FileNotFoundError(
-            "Storage vault not found. Run data generator first."
-            ) from error
+
+        file_name = sys.argv[1]
+
+        print(f"Accessing file '{YELLOW}{file_name}{RESET}'")
+        print()
+
+        f = open(file_name, "r")
+
+        print("---")
+        print()
+        print(f.read())
+        print("---")
+
+        f.close()
+
+        print(f"\nFile '{GREEN}{file_name}{RESET}' closed.")
+
+    except IndexError:
+        print(f"Usage: {sys.argv[0]} {YELLOW}<file>{RESET}")
+
+    except (FileNotFoundError, PermissionError) as error:
+        print("Error opening file "
+              f"'{YELLOW}{file_name}{RESET}': {RED}{error}{RESET}")
+
     except OSError as error:
-        raise OSError(
-            "Could not access the storage vault due to system error."
-            ) from error
-
-    print("Connection established...")
-
-    content: str = file.read()
-
-    print()
-    print("RECOVERED DATA:")
-    print(content)
-
-    file.close()
-
-    print()
-    print("Data recovery complete. Storage unit disconnected.")
+        print("Error opening file "
+              f"'{YELLOW}{file_name}{RESET}': {RED}{error}{RESET}")
 
 
 if __name__ == "__main__":
-
-    try:
-        ancient_text()
-    except Exception as error:
-        print(f"ERROR: {error}")
+    read_file()

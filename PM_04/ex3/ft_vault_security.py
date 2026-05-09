@@ -1,73 +1,64 @@
-#!/usr/bin/env python3
-
-import sys
+from typing import Optional
 
 
-def vault_security() -> None:
-    """Perform secure archive extraction and preservation using
-    context managers to guarantee automatic file sealing."""
+def secure_archive(
+        file_name: str,
+        mode: str,
+        to_write: Optional[str] = None
+) -> tuple[bool, str]:
+    """Safely read from or write to a file."""
 
-    print("=== CYBER ARCHIVES - VAULT SECURITY SYSTEM ===")
-    print()
+    if mode not in ["r", "w"]:
+        return (False, "Invalid file mode.")
 
-    print("Initiating secure vault access...")
-    print("Vault connection established with failsafe protocols")
-    print()
-
-    print()
-    print("SECURE EXTRACTION:")
+    if mode == "w" and to_write is None:
+        return (False, "Missing content to write.")
 
     try:
-        with open("classified_data.txt", "r") as data_one:
-            content_one: str = data_one.read()
-            print(content_one)
-    except FileNotFoundError as error:
-        raise FileNotFoundError(
-            "Missing file. Add classified_data.txt to repository."
-        ) from error
-    except OSError as error:
-        raise OSError(
-            "Failed to access file."
-        ) from error
+        with open(file_name, mode) as my_file:
+            if mode == "w":
+                my_file.write(to_write)
+                return (True, "Content successfully written to file.")
+            else:
+                return (True, my_file.read())
 
+    except OSError as error:
+        return (False, str(error))
+
+
+def main() -> None:
+    """Run archive security tests."""
+
+    print("=== Cyber Archives Security ===")
     print()
 
-    print("SECURE PRESERVATION:")
-
-    try:
-        with open("new_security.txt", "w") as vault:
-            vault.write("[CLASSIFIED] New security protocols archived")
-    except PermissionError as error:
-        raise PermissionError(
-            "Unauthorized procedure. Cannot write to new_security.txt."
-        ) from error
-    except OSError as error:
-        raise OSError(
-            "Failed to access file."
-        ) from error
-
-    try:
-        with open("new_security.txt", "r") as data_two:
-            content_two: str = data_two.read()
-            print(content_two)
-    except FileNotFoundError as error:
-        raise FileNotFoundError(
-            "Missing file. Add new_security.txt to repository."
-        ) from error
-    except OSError as error:
-        raise OSError(
-            "Failed to access file."
-        ) from error
-
+    print("Using 'secure_archive' with wrong mode:")
+    print(secure_archive("mode_error.txt", "a"))
     print()
 
-    print("Vault automatically sealed upon completion")
+    print("Using 'secure_archive' to read from a nonexistent file:")
+    print(secure_archive("foo.txt", "r"))
+    print()
 
-    print("All vault operations completed with maximum security.")
+    print("Using 'secure_archive' to read from an inaccessible file:")
+    print(secure_archive("forbidden.txt", "r"))
+    print()
+
+    print("Using 'secure_archive' to read from a regular file:")
+    print(secure_archive("regular.txt", "r"))
+    print()
+
+    to_write = ("[FRAGMENT 001] Digital preservation protocols "
+                "established 2087\n"
+                "[FRAGMENT 002] Knowledge must survive "
+                "the entropy wars\n"
+                "[FRAGMENT 003] Every byte saved "
+                "is a victory against oblivion\n")
+
+    print("Using 'secure_archive' to write previous content to a new file:")
+    print(secure_archive("new_file.txt", "w", to_write))
+    print()
 
 
 if __name__ == "__main__":
-    try:
-        vault_security()
-    except Exception as error:
-        print(f"ERROR: {error}", file=sys.stderr)
+    main()

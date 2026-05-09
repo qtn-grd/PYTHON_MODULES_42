@@ -1,50 +1,123 @@
-#!/usr/bin/env python3
-
+from typing import Optional
 import sys
 
 
-# def stream_management_alternate() -> None:
-#     """Manages the three sacred streams: input, stdout, stderr."""
-
-#     print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===")
-#     print()
-
-#     print("Input Stream active. Enter archivist ID: ", end="", flush=True)
-#     archivist_id: str = sys.stdin.readline().rstrip("\n")
-
-#     print("Input Stream active. Enter status report: ", end="", flush=True)
-#     status_report: str = sys.stdin.readline().rstrip("\n")
-
-#     print()
-#     print("[STANDARD] Archive status from "
-#           f"{archivist_id}: {status_report}", file=sys.stdout)
-#     print("[ALERT] System diagnostic: Communication channels "
-#           "verified", file=sys.stderr)
-#     print("[STANDARD] Data transmission complete", file=sys.stdout)
-
-#     print()
-#     print("Three-channel communication test successful.")
+GREEN = "\033[32m"
+RED = "\033[31m"
+YELLOW = "\033[33m"
+RESET = "\033[0m"
 
 
-def stream_management() -> None:
-    """Manages the three sacred streams: input, stdout, stderr."""
+def access_archive() -> Optional[str]:
+    """Read and display archive content."""
 
-    print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===")
+    try:
+
+        file_name = sys.argv[1]
+
+        print(f"Accessing file '{YELLOW}{file_name}{RESET}'")
+        print()
+
+        file_one = open(file_name, "r")
+
+        print("---")
+        print()
+        brut_data = file_one.read()
+        print(brut_data)
+        print("---")
+
+        file_one.close()
+
+        print()
+        print(f"File '{GREEN}{file_name}{RESET}' closed.")
+
+    except IndexError:
+        print(f"{RED}[STDERR]{RESET}Usage: "
+              f"{sys.argv[0]} {YELLOW}<file>{RESET}", file=sys.stderr)
+        return None
+
+    except (FileNotFoundError, PermissionError) as error:
+        print(f"{RED}[STDERR]{RESET}Error opening file "
+              f"'{YELLOW}{file_name}{RESET}': "
+              f"{RED}{error}{RESET}", file=sys.stderr)
+        return None
+
+    except OSError as error:
+        print(f"{RED}[STDERR]{RESET}Error opening file "
+              f"'{YELLOW}{file_name}{RESET}': "
+              f"{RED}{error}{RESET}", file=sys.stderr)
+        return None
+
+    return brut_data
+
+
+def generate_archive(brut_data: str) -> None:
+    """Transform and optionally save archive data."""
+
+    print("Transform data:")
     print()
 
-    archivist_id: str = input("Input Stream active. Enter archivist ID: ")
-    status_report: str = input("Input Stream active. Enter status report: ")
+    transformed_lines = []
+
+    for line in brut_data.split("\n"):
+        transformed_lines.append(line + "#")
+
+    transformed_data = "\n".join(transformed_lines)
 
     print()
-    print("[STANDARD] Archive status from "
-          f"{archivist_id}: {status_report}", file=sys.stdout)
-    print("[ALERT] System diagnostic: Communication channels "
-          "verified", file=sys.stderr)
-    print("[STANDARD] Data transmission complete", file=sys.stdout)
+    print("---")
+    print()
+    print(transformed_data)
+    print("---")
+    print()
+
+    try:
+        print("Enter new file name (or empty): ", end="", flush=True)
+        new_name = sys.stdin.readline().strip("\n")
+
+        if new_name == "":
+            print(f"{YELLOW}Not saving data.{RESET}")
+        else:
+            new_file = open(new_name, "w")
+            new_file.write(transformed_data)
+            new_file.close()
+            print()
+            print(f"Saving data to '{YELLOW}{new_name}'{RESET}")
+            print(f"{GREEN}Data saved {RESET}in file "
+                  f"'{YELLOW}{new_name}{RESET}'.")
+
+    except PermissionError as error:
+        print()
+        print(f"{RED}[STDERR]{RESET}Error saving data "
+              f"'{YELLOW}{new_name}{RESET}': "
+              f"{RED}{error}{RESET}", file=sys.stderr)
+        print(f"{YELLOW}Not saving data.{RESET}")
+        return
+
+    except OSError as error:
+        print()
+        print(f"{RED}[STDERR]{RESET}Error saving data "
+              f"'{YELLOW}{new_name}{RESET}': "
+              f"{RED}{error}{RESET}", file=sys.stderr)
+        print(f"{YELLOW}Not saving data.{RESET}")
+        return
+
+
+def main() -> None:
+    """Run the archive recovery workflow."""
+
+    print("=== Cyber Archives Recovery & Preservation ===")
+    print()
+
+    brut_data = access_archive()
 
     print()
-    print("Three-channel communication test successful.")
+
+    if brut_data is None:
+        return
+
+    generate_archive(brut_data)
 
 
 if __name__ == "__main__":
-    stream_management()
+    main()
